@@ -4,33 +4,73 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task_3_Strings
+// ЗАДАНИЕ-3:
+// Дана строка, вывести только те слова, которые встречаются в ней только один раз.
+
+namespace Task_3_Strings_var3
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("ВВЕДИТЕ СТРОКУ");
-            string stroka = Console.ReadLine();
-            Console.WriteLine("Вы ввели - " + stroka);
+            Dictionary<string, int> list_slov = new Dictionary<string, int>();
+            int countSlov = 0;
 
-            Console.WriteLine("ВВЕДИТЕ подстроку");
-            string podstroka = Console.ReadLine();
-            Console.WriteLine("Вы ввели - " + podstroka);
+            Console.WriteLine("Допустим мы вводим строку: ");
+            //string str = Console.ReadLine();
+            string str = "33 11 YYY 33 6666 11 6666 33 11 88";
+            Console.WriteLine(str);
 
-            // ПРОВЕРКА ДЛИНЫ
-            if (stroka.Length < podstroka.Length)
-                Console.WriteLine("строка на может быть меньше подстроки");
+            //ПРЕОБРАЗОВЫВАЕМ
+            string[] split = str.Split(new Char[] { ' ' });
 
-            else
+            int x;
+            // В ЗАДАНИИ НУЖНО НАЙТИ СЛОВА, ВСТРЕЧАЮЩИЕСЯ ОДИН РАЗ. ЗДЕСЬ МОЖНО ЗАДАТЬ ДРУГОЕ ЗНАЧЕНИЕ
+            // int n = int.Parse(Console.ReadLine());
+            int n = 1;
+            Console.Write($"\nБудем искать слова которые встречаются {n} раз \n");
+
+
+            for (int i = 0; i < split.Length; i++)
             {
-                if (stroka.Contains(podstroka))
-                    Console.WriteLine("Строка {0} содержит подстроку {1}", stroka, podstroka);
-                else
-                    Console.WriteLine("Строка {0} НЕ содержит подстроку {1}", stroka, podstroka);
+                x = 0;
+                for (int j = 0; j < split.Length; j++)
+                {
+                    // УБРАТЬ ВЫВОД
+                    //Console.Write($"\n массив split[i] = {split[i]} ");
+                    //Console.Write($"\n массив split[j] = {split[j]} ");
+
+                    if (split[i] == split[j])
+                    {
+                        x++;
+                    }
+                }
+                //Console.WriteLine("\n\n _____делаю вывод__ ");
+                //Console.WriteLine($"\n x РАВНО = {x} , массив SPLIT = {split[i]} , n повторений задано = {n}");
+
+                if (x == n)
+                {
+                    if (!list_slov.ContainsKey(split[i]))
+                    {
+                        countSlov = 0;
+                        countSlov++;
+                        list_slov.Add(split[i], countSlov);
+                    }
+                    else
+                    {
+                        countSlov = list_slov[split[i]];
+                        countSlov++;
+                        list_slov[split[i]] = countSlov;
+                    }
+                }
             }
 
-            Console.ReadKey();
+            Console.WriteLine("\n\n__ВЫВОЖУ РЕЗУЛЬТАТ__ \n");
+            foreach (var element in list_slov)
+            {
+                Console.WriteLine(element.Key);
+            }
+            Console.ReadLine();
         }
     }
 }
